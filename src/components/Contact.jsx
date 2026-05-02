@@ -4,8 +4,6 @@ import { Mail, Download, Send } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
-const getPath = (name) => import.meta.env.PROD ? '/Hux_Ain-Portfolio/' + name : '/' + name;
-
 const Contact = () => {
   const socials = [
     {
@@ -92,7 +90,7 @@ const Contact = () => {
 
             <div className="pt-8">
               <a 
-                href={getPath('Muhammad-ul-Hussain-CV.pdf')}
+                href="/Hux_Ain-Portfolio/Muhammad-ul-Hussain-CV.pdf"
                 download="Muhammad-ul-Hussain-CV.pdf"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-primary font-bold rounded-2xl hover:bg-accent transition-all duration-300 transform hover:scale-105"
               >

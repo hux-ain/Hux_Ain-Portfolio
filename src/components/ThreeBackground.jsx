@@ -3,10 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, Sphere, Stars, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
-const getPath = (name) => import.meta.env.PROD ? '/Hux_Ain-Portfolio/' + name : '/' + name;
-
 const ProfileCard = () => {
-  const texture = useTexture(getPath('hux-photo.jpg'));
+  const texture = useTexture('/Hux_Ain-Portfolio/hux-photo.jpg');
   const meshRef = useRef();
 
   useFrame((state) => {
