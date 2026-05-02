@@ -90,7 +90,7 @@ const Contact = () => {
 
             <div className="pt-8">
               <a 
-                href="/cv.pdf" 
+                href="cv.pdf" 
                 download="Muhammad-ul-Hussain-CV.pdf"
                 className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-primary font-bold rounded-2xl hover:bg-accent transition-all duration-300 transform hover:scale-105"
               >
