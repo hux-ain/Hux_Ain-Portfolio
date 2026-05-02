@@ -4,7 +4,11 @@ import { Float, MeshDistortMaterial, Sphere, Stars, useTexture } from '@react-th
 import * as THREE from 'three';
 
 const ProfileCard = () => {
-  const texture = useTexture('/Hux_Ain-Portfolio/hux-photo.jpg');
+  // Path Alignment: Using the same hardcoded path as CV
+  const texture = useTexture('/Hux_Ain-Portfolio/hux-photo.jpg', (texture) => {
+    console.log('Texture Loaded!');
+  });
+  
   const meshRef = useRef();
 
   useFrame((state) => {
@@ -16,25 +20,28 @@ const ProfileCard = () => {
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
       <group position={[2, 0, 1]} ref={meshRef}>
+        {/* Lighting specifically for the photo mesh */}
+        <pointLight position={[0, 0, 2]} intensity={2} color="#ffffff" />
+        
         {/* Main Profile Image Plane */}
-        <mesh>
-          <planeGeometry args={[2, 2]} />
+        <mesh scale={[2, 2, 1]}>
+          <planeGeometry args={[1, 1]} />
           <meshStandardMaterial 
             map={texture} 
             transparent={true}
-            side={THREE.DoubleSide}
+            side={THREE.DoubleSide} 
           />
         </mesh>
         
         {/* Circular Frame / Glow Effect */}
-        <mesh position={[0, 0, -0.01]}>
-          <circleGeometry args={[1.2, 64]} />
+        <mesh position={[0, 0, -0.01]} scale={[2.4, 2.4, 1]}>
+          <circleGeometry args={[0.5, 64]} />
           <meshBasicMaterial color="#00f2ff" transparent opacity={0.2} />
         </mesh>
 
         {/* Floating Glass Border */}
-        <mesh position={[0, 0, -0.02]}>
-          <planeGeometry args={[2.2, 2.2]} />
+        <mesh position={[0, 0, -0.02]} scale={[2.2, 2.2, 1]}>
+          <planeGeometry args={[1, 1]} />
           <meshPhysicalMaterial 
             color="#ffffff"
             transmission={1}
@@ -104,8 +111,10 @@ const ThreeBackground = () => {
   return (
     <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <ambientLight intensity={0.7} />
-        <pointLight position={[10, 10, 10]} intensity={1.5} color="#00f2ff" />
+        {/* Global Lighting specifically near photo mesh */}
+        <ambientLight intensity={1} />
+        <pointLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
+        
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00a2ff" />
         <spotLight position={[0, 5, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
         
