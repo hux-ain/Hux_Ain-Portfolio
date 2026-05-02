@@ -4,7 +4,7 @@ import { Float, MeshDistortMaterial, Sphere, Stars, useTexture } from '@react-th
 import * as THREE from 'three';
 
 const ProfileCard = () => {
-  const texture = useTexture('/hux_ain photo.jpg');
+  const texture = useTexture('/profile.jpg');
   const meshRef = useRef();
 
   useFrame((state) => {
