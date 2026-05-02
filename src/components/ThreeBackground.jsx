@@ -1,25 +1,25 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, Stars, useTexture } from '@react-three/drei';
+import { Float, MeshDistortMaterial, Sphere, Stars } from '@react-three/drei';
 import * as THREE from 'three';
+import { TextureLoader } from 'three';
 
 const ProfileCard = () => {
-  const base = import.meta.env.BASE_URL;
-  const texture = useTexture(`${base}profile.jpg`);
+  const texture = useLoader(TextureLoader, new URL('/profile.jpg', import.meta.url).href);
   const meshRef = useRef();
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    meshRef.current.position.y = Math.sin(time) * 0.1;
-    meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.1;
+    meshRef.current.position.y = Math.sin(time) * 0.05;
+    meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.05;
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-      <group position={[2, 0, 0]} ref={meshRef}>
+    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
+      <group position={[0, 0, 2]} ref={meshRef}>
         {/* Main Profile Image Plane */}
         <mesh>
-          <planeGeometry args={[2, 2]} />
+          <planeGeometry args={[1.5, 1.5]} />
           <meshStandardMaterial 
             map={texture} 
             transparent={true}
@@ -29,20 +29,20 @@ const ProfileCard = () => {
         
         {/* Circular Frame / Glow Effect */}
         <mesh position={[0, 0, -0.01]}>
-          <circleGeometry args={[1.2, 64]} />
-          <meshBasicMaterial color="#00f2ff" transparent opacity={0.2} />
+          <circleGeometry args={[0.9, 64]} />
+          <meshBasicMaterial color="#00f2ff" transparent opacity={0.1} />
         </mesh>
 
         {/* Floating Glass Border */}
         <mesh position={[0, 0, -0.02]}>
-          <planeGeometry args={[2.2, 2.2]} />
+          <planeGeometry args={[1.6, 1.6]} />
           <meshPhysicalMaterial 
             color="#ffffff"
             transmission={1}
             thickness={0.5}
             roughness={0}
             transparent={true}
-            opacity={0.1}
+            opacity={0.05}
           />
         </mesh>
       </group>
@@ -61,7 +61,7 @@ const AnimatedShape = () => {
 
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={1}>
-      <Sphere ref={meshRef} args={[1, 100, 100]} scale={1.2} position={[-2, 0, 0]}>
+      <Sphere ref={meshRef} args={[1, 100, 100]} scale={1.2} position={[-3, 0, -1]}>
         <MeshDistortMaterial
           color="#00f2ff"
           attach="material"
