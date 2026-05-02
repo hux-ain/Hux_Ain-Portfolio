@@ -1,25 +1,26 @@
 import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, Stars } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Float, MeshDistortMaterial, Sphere, Stars, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { TextureLoader } from 'three';
+
+const getPath = (name) => import.meta.env.PROD ? '/Hux_Ain-Portfolio/' + name : '/' + name;
 
 const ProfileCard = () => {
-  const texture = useLoader(TextureLoader, new URL('/profile.jpg', import.meta.url).href);
+  const texture = useTexture(getPath('hux-photo.jpg'));
   const meshRef = useRef();
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    meshRef.current.position.y = Math.sin(time) * 0.05;
-    meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.05;
+    meshRef.current.position.y = Math.sin(time) * 0.1;
+    meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.1;
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
-      <group position={[0, 0, 2]} ref={meshRef}>
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+      <group position={[2, 0, 1]} ref={meshRef}>
         {/* Main Profile Image Plane */}
         <mesh>
-          <planeGeometry args={[1.5, 1.5]} />
+          <planeGeometry args={[2, 2]} />
           <meshStandardMaterial 
             map={texture} 
             transparent={true}
@@ -29,20 +30,20 @@ const ProfileCard = () => {
         
         {/* Circular Frame / Glow Effect */}
         <mesh position={[0, 0, -0.01]}>
-          <circleGeometry args={[0.9, 64]} />
-          <meshBasicMaterial color="#00f2ff" transparent opacity={0.1} />
+          <circleGeometry args={[1.2, 64]} />
+          <meshBasicMaterial color="#00f2ff" transparent opacity={0.2} />
         </mesh>
 
         {/* Floating Glass Border */}
         <mesh position={[0, 0, -0.02]}>
-          <planeGeometry args={[1.6, 1.6]} />
+          <planeGeometry args={[2.2, 2.2]} />
           <meshPhysicalMaterial 
             color="#ffffff"
             transmission={1}
             thickness={0.5}
             roughness={0}
             transparent={true}
-            opacity={0.05}
+            opacity={0.1}
           />
         </mesh>
       </group>
@@ -61,7 +62,7 @@ const AnimatedShape = () => {
 
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={1}>
-      <Sphere ref={meshRef} args={[1, 100, 100]} scale={1.2} position={[-3, 0, -1]}>
+      <Sphere ref={meshRef} args={[1, 100, 100]} scale={1.2} position={[-2, 0, 0]}>
         <MeshDistortMaterial
           color="#00f2ff"
           attach="material"
