@@ -22,8 +22,11 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
+
       - name: Build
-        run: npx vite build
+        run: |
+          # Sabse safe tareeqa build karne ka
+          ./node_modules/.bin/vite build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
